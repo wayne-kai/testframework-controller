@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170706 10:19:59.082" generator="Robot 3.0.2 (Python 2.7.5 on linux2)">
+<suite source="/home/Test-Framework/SelfTests/RemoteOstinato.robot" id="s1" name="RemoteOstinato">
+<test id="s1-t1" name="Testnet 1841">
+<kw name="Test Remote Ostinato Drone">
+<arguments>
+<arg>Testnet 1841</arg>
+</arguments>
+<kw name="Initialise Remote Traffic Generator" library="RemoteOstinatoController">
+<arguments>
+<arg>${ESXI.host}</arg>
+<arg>${ESXI.user}</arg>
+<arg>${ESXI.password}</arg>
+<arg>${REMOTE_TRAFFIC_GENERATOR.host}</arg>
+<arg>${REMOTE_TRAFFIC_GENERATOR.user}</arg>
+<arg>${REMOTE_TRAFFIC_GENERATOR.password}</arg>
+</arguments>
+<status status="PASS" endtime="20170706 10:19:59.286" starttime="20170706 10:19:59.285"></status>
+</kw>
+<kw name="Initialise Generator In Network" library="RemoteOstinatoController">
+<doc>Initialise Ostinato Controller on VM inside network.</doc>
+<arguments>
+<arg>${testnet}</arg>
+</arguments>
+<msg timestamp="20170706 10:19:59.287" level="INFO">Connecting to ESXI at [vcenter.phantom.net] with username [tfuser]</msg>
+<msg timestamp="20170706 10:19:59.467" level="INFO">Connecting to VM "Testnet 1841 - CentOS - Traffic Tester"</msg>
+<msg timestamp="20170706 10:19:59.819" level="INFO">Uploading /home/Test-Framework/Resources/Python/OstinatoController.py to the VM</msg>
+<msg timestamp="20170706 10:20:00.200" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:00.553" level="INFO">Upload successful</msg>
+<msg timestamp="20170706 10:20:00.554" level="INFO">Successfully uploaded /home/Test-Framework/Resources/Python/OstinatoController.py to the VM</msg>
+<msg timestamp="20170706 10:20:00.554" level="INFO">Disconnecting from ESXI</msg>
+<msg timestamp="20170706 10:20:00.570" level="INFO">/usr/lib/python2.7/site-packages/urllib3/connectionpool.py:769: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.org/en/latest/security.html
+  InsecureRequestWarning)</msg>
+<status status="PASS" endtime="20170706 10:20:00.571" starttime="20170706 10:19:59.287"></status>
+</kw>
+<kw name="Configure Traffic Generator" library="RemoteOstinatoController">
+<doc>Configure the network generator to transmit to a host.</doc>
+<arguments>
+<arg>${testnet}</arg>
+<arg>${OSTINATO.portid}</arg>
+<arg>${OSTINATO.target}</arg>
+<arg>128</arg>
+</arguments>
+<msg timestamp="20170706 10:20:00.573" level="INFO">Connecting to ESXI at [vcenter.phantom.net] with username [tfuser]</msg>
+<msg timestamp="20170706 10:20:00.733" level="INFO">Connecting to VM "Testnet 1841 - CentOS - Traffic Tester"</msg>
+<msg timestamp="20170706 10:20:01.055" level="INFO">Executing "/usr/bin/bash -c "source /home/user/pyenv/ostinato/bin/activate &amp;&amp; python /home/user/OstinatoController.py configure --burstsize 128 0 58.58.12.1 1&gt; /tmp/OstinatoController-stdout.log 2&gt; /tmp/OstinatoController-stderr.log"" on guest</msg>
+<msg timestamp="20170706 10:20:08.785" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:09.209" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:09.461" level="INFO">/home/user/OstinatoController.py executed on guest
+Exit code: 0
+stdout:
+Configured streams on drone 127.0.0.1 port 0
+
+stderr:
+INFO:root:Output of "ip route get 58.58.12.1":
+58.58.12.1 via 139.139.11.254 dev ens160  src 139.139.11.103 
+    cache 
+
+INFO:root:Output of "ip link show ens160":
+2: ens160: &lt;BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+    link/ether 00:50:56:b6:3e:e2 brd ff:ff:ff:ff:ff:ff
+
+INFO:root:Pinging 139.139.11.254
+INFO:root:Pinging 139.139.11.254
+INFO:root:Pinging 139.139.11.254
+INFO:root:Pinging 139.139.11.254
+INFO:root:Pinging 139.139.11.254
+INFO:root:Output of "ip neighbor show 139.139.11.254 nud reachable":
+139.139.11.254 dev ens160 lladdr a0:cf:5b:38:a6:26 REACHABLE
+
+INFO:root:Configuring streams
+INFO:root:Src MAC: 00:50:56:b6:3e:e2 (5056b63ee2)
+INFO:root:Src IP: 139.139.11.103 (8b8b0b67)
+INFO:root:Dst MAC: a0:cf:5b:38:a6:26 (a0cf5b38a626)
+INFO:root:Dst IP: 58.58.12.1 (3a3a0c01)
+INFO:root:Number of packets per burst: 128
+INFO:root:Connecting to drone(127.0.0.1:7878)
+INFO:ostinato.rpc:invoking RPC checkVersion(VersionInfo): VersionCompatibility
+INFO:ostinato.rpc:invoking RPC addStream(StreamIdList): Ack
+INFO:root:Configuring TCP stream
+INFO:root:Configuring UDP stream
+INFO:ostinato.rpc:invoking RPC modifyStream(StreamConfigList): Ack
+</msg>
+<msg timestamp="20170706 10:20:09.461" level="INFO">Disconnecting from ESXI</msg>
+<status status="PASS" endtime="20170706 10:20:09.478" starttime="20170706 10:20:00.571"></status>
+</kw>
+<kw name="Start Traffic Generator" library="RemoteOstinatoController">
+<doc>Start generating traffic.</doc>
+<arguments>
+<arg>${testnet}</arg>
+<arg>${OSTINATO.portid}</arg>
+</arguments>
+<msg timestamp="20170706 10:20:09.480" level="INFO">Connecting to ESXI at [vcenter.phantom.net] with username [tfuser]</msg>
+<msg timestamp="20170706 10:20:09.804" level="INFO">Connecting to VM "Testnet 1841 - CentOS - Traffic Tester"</msg>
+<msg timestamp="20170706 10:20:10.145" level="INFO">Executing "/usr/bin/bash -c "source /home/user/pyenv/ostinato/bin/activate &amp;&amp; python /home/user/OstinatoController.py start 0 1&gt; /tmp/OstinatoController-stdout.log 2&gt; /tmp/OstinatoController-stderr.log"" on guest</msg>
+<msg timestamp="20170706 10:20:11.906" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:12.445" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:12.813" level="INFO">/home/user/OstinatoController.py executed on guest
+Exit code: 0
+stdout:
+Started transmitting on drone 127.0.0.1 port 0
+
+stderr:
+INFO:root:Connecting to drone(127.0.0.1:7878)
+INFO:ostinato.rpc:invoking RPC checkVersion(VersionInfo): VersionCompatibility
+INFO:root:starting transmit
+INFO:ostinato.rpc:invoking RPC startTransmit(PortIdList): Ack
+</msg>
+<msg timestamp="20170706 10:20:12.813" level="INFO">Disconnecting from ESXI</msg>
+<status status="PASS" endtime="20170706 10:20:12.829" starttime="20170706 10:20:09.479"></status>
+</kw>
+<kw name="Stop Traffic Generator" library="RemoteOstinatoController">
+<doc>Stop generating traffic.</doc>
+<arguments>
+<arg>${testnet}</arg>
+<arg>${OSTINATO.portid}</arg>
+</arguments>
+<msg timestamp="20170706 10:20:12.830" level="INFO">Connecting to ESXI at [vcenter.phantom.net] with username [tfuser]</msg>
+<msg timestamp="20170706 10:20:12.963" level="INFO">Connecting to VM "Testnet 1841 - CentOS - Traffic Tester"</msg>
+<msg timestamp="20170706 10:20:13.278" level="INFO">Executing "/usr/bin/bash -c "source /home/user/pyenv/ostinato/bin/activate &amp;&amp; python /home/user/OstinatoController.py stop 0 1&gt; /tmp/OstinatoController-stdout.log 2&gt; /tmp/OstinatoController-stderr.log"" on guest</msg>
+<msg timestamp="20170706 10:20:16.178" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:16.586" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:16.848" level="INFO">/home/user/OstinatoController.py executed on guest
+Exit code: 0
+stdout:
+Stopped transmitting on drone 127.0.0.1 port 0
+
+stderr:
+INFO:root:Stopping transmit
+INFO:root:Connecting to drone(127.0.0.1:7878)
+INFO:ostinato.rpc:invoking RPC checkVersion(VersionInfo): VersionCompatibility
+INFO:ostinato.rpc:invoking RPC stopTransmit(PortIdList): Ack
+</msg>
+<msg timestamp="20170706 10:20:16.848" level="INFO">Disconnecting from ESXI</msg>
+<status status="PASS" endtime="20170706 10:20:16.870" starttime="20170706 10:20:12.829"></status>
+</kw>
+<kw name="Clear Traffic Generator" library="RemoteOstinatoController">
+<doc>Clear the network generator's configuration.</doc>
+<arguments>
+<arg>${testnet}</arg>
+<arg>${OSTINATO.portid}</arg>
+</arguments>
+<msg timestamp="20170706 10:20:16.872" level="INFO">Connecting to ESXI at [vcenter.phantom.net] with username [tfuser]</msg>
+<msg timestamp="20170706 10:20:17.019" level="INFO">Connecting to VM "Testnet 1841 - CentOS - Traffic Tester"</msg>
+<msg timestamp="20170706 10:20:17.525" level="INFO">Executing "/usr/bin/bash -c "source /home/user/pyenv/ostinato/bin/activate &amp;&amp; python /home/user/OstinatoController.py delete 0 1&gt; /tmp/OstinatoController-stdout.log 2&gt; /tmp/OstinatoController-stderr.log"" on guest</msg>
+<msg timestamp="20170706 10:20:19.279" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:19.693" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:19.947" level="INFO">/home/user/OstinatoController.py executed on guest
+Exit code: 0
+stdout:
+Deleted streams on drone 127.0.0.1 port 0
+
+stderr:
+INFO:root:Connecting to drone(127.0.0.1:7878)
+INFO:ostinato.rpc:invoking RPC checkVersion(VersionInfo): VersionCompatibility
+INFO:root:Stop transmitting
+INFO:ostinato.rpc:invoking RPC stopTransmit(PortIdList): Ack
+INFO:root:Deleting tx_streams
+INFO:ostinato.rpc:invoking RPC deleteStream(StreamIdList): Ack
+</msg>
+<msg timestamp="20170706 10:20:19.948" level="INFO">Disconnecting from ESXI</msg>
+<status status="PASS" endtime="20170706 10:20:19.963" starttime="20170706 10:20:16.871"></status>
+</kw>
+<status status="PASS" endtime="20170706 10:20:19.964" starttime="20170706 10:19:59.284"></status>
+</kw>
+<tags>
+<tag>drone</tag>
+<tag>ostinato</tag>
+<tag>remote</tag>
+<tag>self-test</tag>
+</tags>
+<status status="PASS" endtime="20170706 10:20:19.965" critical="yes" starttime="20170706 10:19:59.283"></status>
+</test>
+<test id="s1-t2" name="Testnet 3845">
+<kw name="Test Remote Ostinato Drone">
+<arguments>
+<arg>Testnet 3845</arg>
+</arguments>
+<kw name="Initialise Remote Traffic Generator" library="RemoteOstinatoController">
+<arguments>
+<arg>${ESXI.host}</arg>
+<arg>${ESXI.user}</arg>
+<arg>${ESXI.password}</arg>
+<arg>${REMOTE_TRAFFIC_GENERATOR.host}</arg>
+<arg>${REMOTE_TRAFFIC_GENERATOR.user}</arg>
+<arg>${REMOTE_TRAFFIC_GENERATOR.password}</arg>
+</arguments>
+<status status="PASS" endtime="20170706 10:20:19.970" starttime="20170706 10:20:19.968"></status>
+</kw>
+<kw name="Initialise Generator In Network" library="RemoteOstinatoController">
+<doc>Initialise Ostinato Controller on VM inside network.</doc>
+<arguments>
+<arg>${testnet}</arg>
+</arguments>
+<msg timestamp="20170706 10:20:19.971" level="INFO">Connecting to ESXI at [vcenter.phantom.net] with username [tfuser]</msg>
+<msg timestamp="20170706 10:20:20.101" level="INFO">Connecting to VM "Testnet 3845 - CentOS - Traffic Tester"</msg>
+<msg timestamp="20170706 10:20:20.387" level="INFO">Uploading /home/Test-Framework/Resources/Python/OstinatoController.py to the VM</msg>
+<msg timestamp="20170706 10:20:20.831" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:21.185" level="INFO">Upload successful</msg>
+<msg timestamp="20170706 10:20:21.186" level="INFO">Successfully uploaded /home/Test-Framework/Resources/Python/OstinatoController.py to the VM</msg>
+<msg timestamp="20170706 10:20:21.186" level="INFO">Disconnecting from ESXI</msg>
+<status status="PASS" endtime="20170706 10:20:21.201" starttime="20170706 10:20:19.971"></status>
+</kw>
+<kw name="Configure Traffic Generator" library="RemoteOstinatoController">
+<doc>Configure the network generator to transmit to a host.</doc>
+<arguments>
+<arg>${testnet}</arg>
+<arg>${OSTINATO.portid}</arg>
+<arg>${OSTINATO.target}</arg>
+<arg>128</arg>
+</arguments>
+<msg timestamp="20170706 10:20:21.203" level="INFO">Connecting to ESXI at [vcenter.phantom.net] with username [tfuser]</msg>
+<msg timestamp="20170706 10:20:21.367" level="INFO">Connecting to VM "Testnet 3845 - CentOS - Traffic Tester"</msg>
+<msg timestamp="20170706 10:20:21.658" level="INFO">Executing "/usr/bin/bash -c "source /home/user/pyenv/ostinato/bin/activate &amp;&amp; python /home/user/OstinatoController.py configure --burstsize 128 0 58.58.12.1 1&gt; /tmp/OstinatoController-stdout.log 2&gt; /tmp/OstinatoController-stderr.log"" on guest</msg>
+<msg timestamp="20170706 10:20:34.799" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:35.203" level="INFO">Starting new HTTPS connection (1): 10.6.255.253</msg>
+<msg timestamp="20170706 10:20:35.457" level="INFO">/home/user/OstinatoController.py executed on guest
+Exit code: 1
+stdout:
+Error: 'module' object has no attribute 'CatchProcessError'
+
+stderr:
+INFO:root:Output of "ip route get 58.58.12.1":
+58.58.12.1 via 139.139.14.254 dev ens160  src 139.139.14.114 
+    cache 
+
+INFO:root:Output of "ip link show ens160":
+2: ens160: &lt;BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+    link/ether 00:50:56:b6:75:f8 brd ff:ff:ff:ff:ff:ff
+
+INFO:root:Pinging 139.139.14.254
+ERROR:root:'module' object has no attribute 'CatchProcessError'
+Traceback (most recent call last):
+  File "/home/user/OstinatoController.py", line 481, in &lt;module&gt;
+    args.func(oc, args)
+  File "/home/user/OstinatoController.py", line 406, in cmd_configure
+    packets_per_burst=args.burstsize)
+  File "/home/user/OstinatoController.py", line 173, in configure_streams
+    resolv_src_ip, resolv_src_mac, resolv_dst_mac = resolve_src_dst(dst_ip)
+  File "/home/user/OstinatoController.py", line 108, in resolve_src_dst
+    dst_mac = ip_nexthop_get_mac(nexthop_ip)
+  File "/home/user/OstinatoController.py", line 61, in ip_nexthop_get_mac
+    except subprocess.CatchProcessError as e:
+AttributeError: 'module' object has no attribute 'CatchProcessError'
+</msg>
+<msg timestamp="20170706 10:20:35.458" level="INFO">Disconnecting from ESXI</msg>
+<msg timestamp="20170706 10:20:35.494" level="FAIL">RemoteOstinatoControllerError: Error executing /home/user/OstinatoController.py on guest
+Exit code: 1
+Output:
+Error: 'module' object has no attribute 'CatchProcessError'
+
+Error:
+INFO:root:Output of "ip route get 58.58.12.1":
+58.58.12.1 via 139.139.14.254 dev ens160  src 139.139.14.114 
+    cache 
+
+INFO:root:Output of "ip link show ens160":
+2: ens160: &lt;BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+    link/ether 00:50:56:b6:75:f8 brd ff:ff:ff:ff:ff:ff
+
+INFO:root:Pinging 139.139.14.254
+ERROR:root:'module' object has no attribute 'CatchProcessError'
+Traceback (most recent call last):
+  File "/home/user/OstinatoController.py", line 481, in &lt;module&gt;
+    args.func(oc, args)
+  File "/home/user/OstinatoController.py", line 406, in cmd_configure
+    packets_per_burst=args.burstsize)
+  File "/home/user/OstinatoController.py", line 173, in configure_streams
+    resolv_src_ip, resolv_src_mac, resolv_dst_mac = resolve_src_dst(dst_ip)
+  File "/home/user/OstinatoController.py", line 108, in resolve_src_dst
+    dst_mac = ip_nexthop_get_mac(nexthop_ip)
+  File "/home/user/OstinatoController.py", line 61, in ip_nexthop_get_mac
+    except subprocess.CatchProcessError as e:
+AttributeError: 'module' object has no attribute 'CatchProcessError'
+</msg>
+<status status="FAIL" endtime="20170706 10:20:35.495" starttime="20170706 10:20:21.202"></status>
+</kw>
+<status status="FAIL" endtime="20170706 10:20:35.495" starttime="20170706 10:20:19.967"></status>
+</kw>
+<tags>
+<tag>drone</tag>
+<tag>ostinato</tag>
+<tag>remote</tag>
+<tag>self-test</tag>
+</tags>
+<status status="FAIL" endtime="20170706 10:20:35.496" critical="yes" starttime="20170706 10:20:19.965">RemoteOstinatoControllerError: Error executing /home/user/OstinatoController.py on guest
+Exit code: 1
+Output:
+Error: 'module' object has no attribute 'CatchProcessError'
+
+Error:
+INFO:root:Output of "ip route get 58.58.12.1":
+58.58.12.1 via 139.139.14.254 dev ens160  src 139.139.14.114 
+    cache 
+
+INFO:root:Output of "ip link show ens160":
+2: ens160: &lt;BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+    link/ether 00:50:56:b6:75:f8 brd ff:ff:ff:ff:ff:ff
+
+INFO:root:Pinging 139.139.14.254
+ERROR:root:'module' object has no attribute 'CatchProcessError'
+Traceback (most recent call last):
+  File "/home/user/OstinatoController.py", line 481, in &lt;module&gt;
+    args.func(oc, args)
+  File "/home/user/OstinatoController.py", line 406, in cmd_configure
+    packets_per_burst=args.burstsize)
+  File "/home/user/OstinatoController.py", line 173, in configure_streams
+    resolv_src_ip, resolv_src_mac, resolv_dst_mac = resolve_src_dst(dst_ip)
+  File "/home/user/OstinatoController.py", line 108, in resolve_src_dst
+    dst_mac = ip_nexthop_get_mac(nexthop_ip)
+  File "/home/user/OstinatoController.py", line 61, in ip_nexthop_get_mac
+    except subprocess.CatchProcessError as e:
+AttributeError: 'module' object has no attribute 'CatchProcessError'
+</status>
+</test>
+<doc>Test controlling a remote Ostinato drone on a VM via ESXI</doc>
+<status status="FAIL" endtime="20170706 10:20:35.498" starttime="20170706 10:19:59.084"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="1">Critical Tests</stat>
+<stat fail="1" pass="1">All Tests</stat>
+</total>
+<tag>
+<stat fail="1" pass="1">drone</stat>
+<stat fail="1" pass="1">ostinato</stat>
+<stat fail="1" pass="1">remote</stat>
+<stat fail="1" pass="1">self-test</stat>
+</tag>
+<suite>
+<stat fail="1" id="s1" name="RemoteOstinato" pass="1">RemoteOstinato</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

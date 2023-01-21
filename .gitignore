@@ -1,0 +1,7 @@
+*.bak
+*.pyc
+*.swp
+*.log
+*.yml
+/test-framework/output
+
